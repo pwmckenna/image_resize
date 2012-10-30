@@ -5,6 +5,8 @@ var async = require('promised-io/promise');
 var im = require("imagemagick");
 var express = require('express');
 var _ = require('underscore');
+var colorize = require('colorize');
+var cconsole = colorize.console;
 
 var app = express();
 app.use(express.bodyParser());
@@ -15,7 +17,7 @@ app.use(express.bodyParser());
 //get the same promise object, which will be resolved at the same time.
 //so no timing issues to worry about...
 //the caching is of the promise object, so dups of the results aren't
-//stored in memory, and the storage of the objects themselves in in some
+//stored in memory, and the storage of the objects themselves is in some
 //tidy underscore closure
 var request_image = _.memoize(function(url) {
     var ret = new async.Deferred();
@@ -59,10 +61,13 @@ var resize_image = _.memoize(function(data, width, height) {
 });
 
 app.get('/', function (req, res) {
+    cconsole.log('#yellow[GET request]');
     //lets parse some args
     var width = req.param('w');
     var height = req.param('h');
     var image_url = req.param('u');
+
+    cconsole.log(JSON.stringify([width, height, image_url], null, 4));
 
     //here's the course of action
     //1. grab remote image
@@ -77,9 +82,21 @@ app.get('/', function (req, res) {
         }, function(err) {
             res.send(500, { error: err });
         });
+
+        //display image resize result
+        resize.then(
+            function() { cconsole.log('image resize #green[success]'); },
+            function() { cconsole.log('image resize #red[failure]'); }
+        );
     }, function() {
         res.send(404);
     });
+
+    //display image request result
+    image_request.then(
+        function() { cconsole.log('image request #green[success]'); },
+        function() { cconsole.log('image request #red[failure]'); }
+    );
 });
 
 app.listen(3000);
