@@ -20,3 +20,6 @@ imagemagick...getting this working is a pain if you've just switched from lion t
 ```
 brew install imagemagick
 ```
+
+#Notes
+Current passes jshint, but clashes with jslint's very opinionated style rules.
