@@ -1,7 +1,7 @@
 image_resize
 ============
 
-node.js server to resize images on the fly
+node.js server to resize (crop really) images on the fly
 
 #Usage:
 ```
