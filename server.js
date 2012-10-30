@@ -8,9 +8,13 @@ var get = promisify(request.get);
 
 var express = require('express');
 var app = express();
-
+app.use(express.bodyParser());
 app.get('/', function(req, res){
-	res.send('Hello World');
+	res.send({
+		w: req.param('w', null),
+		h: req.param('h', null),
+		u: req.param('u', null)
+	});
 });
 
 app.listen(3000);
