@@ -38,9 +38,13 @@ var request_image = _.memoize(function(url) {
     return ret.promise;
 });
 
-var resize_image = function(data, width, height) {
+//the resizing is pretty expensive, so lets cache these promise objects
+//as well. making underscore's memoize use these giant data blogs as lookup
+//keys is probably doubling the space needed for the same image, but the
+//speed boost is huge.
+var resize_image = _.memoize(function(data, width, height) {
     var ret = new async.Deferred();
-    im.resize({
+    im.crop({
         srcData : data,
         width : width,
         height : height,
@@ -52,13 +56,18 @@ var resize_image = function(data, width, height) {
         }
     });
     return ret.promise;
-};
+});
 
 app.get('/', function (req, res) {
+    //lets parse some args
     var width = req.param('w');
     var height = req.param('h');
     var image_url = req.param('u');
 
+    //here's the course of action
+    //1. grab remote image
+    //2. resize it.
+    //3. hand the resized image back to the original requestor
     var image_request = request_image(image_url);
     image_request.then(function(result) {
         var resize = resize_image(result.body, width, height);

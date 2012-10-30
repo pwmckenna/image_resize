@@ -11,4 +11,5 @@ node server.js
 
 #Reference projects
 http://www.jeff.wilcox.name/2011/10/node-express-imagemagick-square-resizing/
+https://github.com/tildeio/rsvp.js/pull/4 (can't remember where i originally got the promisify stuff from)
 
