@@ -44,10 +44,10 @@ request_image = _.memoize(function(url) {
 });
 
 //the resizing is pretty expensive, so lets cache these promise objects
-//as well. making underscore's memoize use these giant data blogs as lookup
-//keys is probably doubling the space needed for the same image, but the
-//speed boost is huge.
-resize_image = _.memoize(function(data, width, height) {
+//as well. and while it was appropriate to use the image url as the key
+//for caching images, it makes sense to caches resized images based
+//on the url, width and height...so we'll pass in the url to use
+resize_image = _.memoize(function(data, width, height, url) {
     var ret = new async.Deferred();
     im.crop({
         srcData : data,
@@ -61,6 +61,9 @@ resize_image = _.memoize(function(data, width, height) {
         }
     });
     return ret.promise;
+}, function() {
+    //this is the memoize hash function...make it simply return the url
+    return _.toArray(arguments)[3];
 });
 
 app.get('/', function (req, res) {
@@ -79,7 +82,7 @@ app.get('/', function (req, res) {
     //3. hand the resized image back to the original requestor
     image_request = request_image(image_url);
     image_request.then(function(result) {
-        var resize = resize_image(result.body, width, height);
+        var resize = resize_image(result.body, width, height, req.url);
         resize.then(function(stdout) {
             res.contentType(result.headers['content-type']);
             res.end(stdout, 'binary');
