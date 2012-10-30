@@ -74,7 +74,7 @@ app.get('/', function (req, res) {
     image_url = req.param('u');
 
     cconsole.log('#yellow[GET request]');
-    cconsole.log(JSON.stringify([width, height, image_url], null, 4));
+    console.log(image_url, width, height);
 
     //here's the course of action
     //1. grab remote image
