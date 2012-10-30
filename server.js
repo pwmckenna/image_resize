@@ -46,7 +46,7 @@ request_image = _.memoize(function(url) {
 //the resizing is pretty expensive, so lets cache these promise objects
 //as well. and while it was appropriate to use the image url as the key
 //for caching images, it makes sense to caches resized images based
-//on the url, width and height...so we'll pass in the url to use
+//on the url, width and height...so we'll pass in the original request url to use
 resize_image = _.memoize(function(data, width, height, url) {
     var ret = new async.Deferred();
     im.crop({
