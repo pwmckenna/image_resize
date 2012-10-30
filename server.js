@@ -66,7 +66,7 @@ resize_image = _.memoize(function(data, width, height, url) {
     return url;
 });
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     var width, height, image_url, image_request;
     //lets parse some args
     width = req.param('w');
