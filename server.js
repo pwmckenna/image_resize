@@ -1,21 +1,22 @@
-var colorize = require('colorize');
-var cconsole = colorize.console;
-
-var promisify = require('./js/promisify');
-var request = require('request');
-var post = promisify(request.post);
-var get = promisify(request.get);
+var request = require('request')
 
 var express = require('express');
 var app = express();
 app.use(express.bodyParser());
-app.get('/', function(req, res){
-	res.send({
-		w: req.param('w', null),
-		h: req.param('h', null),
-		u: req.param('u', null)
-	});
+
+app.get('/', function(req, response){
+    var width, height, url;
+    width = req.param('w', null);
+    height = req.param('h', null);
+    url = req.param('u', null);
+
+    console.log('image request:');
+    console.log(JSON.stringify({
+        width: width,
+        height: height,
+        url: url
+    }, null, 4));
+    request.get(url).pipe(response);
 });
 
 app.listen(3000);
-console.log('Listening on port 3000');
