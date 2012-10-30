@@ -61,9 +61,9 @@ resize_image = _.memoize(function(data, width, height, url) {
         }
     });
     return ret.promise;
-}, function() {
+}, function(data, width, height, url) {
     //this is the memoize hash function...make it simply return the url
-    return _.toArray(arguments)[3];
+    return url;
 });
 
 app.get('/', function (req, res) {
