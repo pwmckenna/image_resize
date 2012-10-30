@@ -1,4 +1,4 @@
-var async = require('promised-io/promise'); // >=v2.4
+var async = require('promised-io/promise');
 
 module.exports = function(nodeAsyncFn, context) {
   return function() {
