@@ -52,7 +52,7 @@ resize_image = _.memoize(function(data, width, height, url) {
     im.crop({
         srcData : data,
         width : width,
-        height : height,
+        height : height
     }, function(err, stdout, stderr) {
         if(err) {
             ret.reject(err);
