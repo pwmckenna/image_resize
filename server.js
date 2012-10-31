@@ -8,10 +8,10 @@ var _ = require('underscore');
 var colorize = require('colorize');
 var cconsole = colorize.console;
 
-var app = express();
-app.use(express.bodyParser());
-
 var request_image, resize_image;
+var app = express();
+
+app.use(express.bodyParser());
 
 //memoizing here works as a cache...but its even better than that.
 //when you call for the second time with the same url, it doesn't
@@ -75,6 +75,12 @@ app.get('/', function(req, res) {
 
     cconsole.log('#yellow[GET request]');
     console.log(image_url, width, height);
+
+    if(_.isUndefined(width) || _.isUndefined(height) || _.isUndefined(image_url)) {
+        width = 394;
+        height = 400;
+        image_url = 'http://i.chzbgr.com/completestore/2008/5/25/404errorohha128562258124648582.jpg';
+    }
 
     //here's the course of action
     //1. grab remote image
