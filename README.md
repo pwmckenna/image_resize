@@ -16,7 +16,11 @@ http://www.jeff.wilcox.name/2011/10/node-express-imagemagick-square-resizing/
 https://github.com/tildeio/rsvp.js/pull/4 (can't remember where i originally got the promisify stuff from)
 
 #Dependencies
-imagemagick...getting this working is a pain if you've just switched from lion to mountain lion...good luck.  
+###xcode
+needs version 4.5.1
+
+###imagemagick
+getting this working is a pain if you've just switched from lion to mountain lion...good luck.  
 ```
 brew install imagemagick
 ```
