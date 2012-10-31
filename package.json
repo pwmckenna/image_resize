@@ -3,11 +3,11 @@
 	"version": "0.0.1",
 	"main": "server.js",
 	"dependencies": {
-		"colorize": "0.1.x",
-		"underscore": "1.4.x",
-		"promised-io": "0.3.x",
-		"request": "2.11.x",
-		"express": "3.x",
-		"imagemagick": "0.1.x"
+		"colorize": "0.1.0",
+		"underscore": "1.4.2",
+		"promised-io": "0.3.0",
+		"request": "2.11.4",
+		"express": "3.0.0",
+		"imagemagick": "0.1.3"
 	}
 }
