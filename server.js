@@ -35,10 +35,10 @@ request_image = _.memoize(function(url) {
         if(result.statusCode === 200) {
             ret.resolve(result);
         } else {
-            ret.reject();
+            ret.reject(result);
         }
-    }, function() {
-        ret.reject();
+    }, function(err) {
+        ret.reject(err);
     });
     return ret.promise;
 });
@@ -99,16 +99,17 @@ app.get('/', function(req, res) {
         //display image resize result
         resize.then(
             function() { cconsole.log('image resize #green[success]'); },
-            function() { cconsole.log('image resize #red[failure]'); }
+            function(err) { cconsole.log('image resize #red[failure]', err); }
         );
-    }, function() {
+    }, function(err) {
+        console.log('image request error', err);
         res.send(404);
     });
 
     //display image request result
     image_request.then(
         function() { cconsole.log('image request #green[success]'); },
-        function() { cconsole.log('image request #red[failure]'); }
+        function(err) { cconsole.log('image request #red[failure]', err); }
     );
 });
 
