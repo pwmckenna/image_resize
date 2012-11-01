@@ -8,7 +8,7 @@ var _ = require('underscore');
 var colorize = require('colorize');
 var cconsole = colorize.console;
 
-var request_image, resize_image, log_deferred_result;
+var request_image, resize_image, log_deferred_result, image_request_handler;
 var app = express();
 
 app.use(express.bodyParser());
@@ -74,7 +74,7 @@ resize_image = _.memoize(function(data, width, height, url) {
     return url;
 });
 
-app.get('/', function(req, res) {
+image_request_handler = function(req, res) {
     var width, height, image_url, image_request;
     //lets parse some args
     width = req.param('w');
@@ -96,19 +96,21 @@ app.get('/', function(req, res) {
     //3. hand the resized image back to the original requestor
     image_request = request_image(image_url);
     image_request.then(function(result) {
-        var resize = resize_image(result.body, width, height, req.url);
-        resize.then(function(stdout) {
+        var resize_request = resize_image(result.body, width, height, req.url);
+        resize_request.then(function(stdout) {
             res.contentType(result.headers['content-type']);
             res.end(stdout, 'binary');
         }, function(err) {
             res.send(500, { error: err });
         });
-        log_deferred_result(resize, 'image resize');
+        log_deferred_result(resize_request, 'image resize');
     }, function(err) {
         console.log('image request error', err);
         res.send(404);
     });
     log_deferred_result(image_request, 'image request');
-});
+};
+
+app.get('/', image_request_handler);
 
 app.listen(3000);
