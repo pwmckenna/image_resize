@@ -8,10 +8,18 @@ var _ = require('underscore');
 var colorize = require('colorize');
 var cconsole = colorize.console;
 
-var request_image, resize_image;
+var request_image, resize_image, log_deferred_result;
 var app = express();
 
 app.use(express.bodyParser());
+
+log_deferred_result = function(deferred, name) {
+    //display deferred result
+    deferred.then(
+        function() { cconsole.log(name + ' #green[success]'); },
+        function(err) { cconsole.log(name + ' #red[failure]', err); }
+    );
+};
 
 //memoizing here works as a cache...but its even better than that.
 //when you call for the second time with the same url, it doesn't
@@ -95,22 +103,12 @@ app.get('/', function(req, res) {
         }, function(err) {
             res.send(500, { error: err });
         });
-
-        //display image resize result
-        resize.then(
-            function() { cconsole.log('image resize #green[success]'); },
-            function(err) { cconsole.log('image resize #red[failure]', err); }
-        );
+        log_deferred_result(resize, 'image resize');
     }, function(err) {
         console.log('image request error', err);
         res.send(404);
     });
-
-    //display image request result
-    image_request.then(
-        function() { cconsole.log('image request #green[success]'); },
-        function(err) { cconsole.log('image request #red[failure]', err); }
-    );
+    log_deferred_result(image_request, 'image request');
 });
 
 app.listen(3000);
