@@ -1,4 +1,4 @@
-image_resize
+content-bundles-image-resizer
 ============
 
 node.js server to resize (crop really) images on the fly
