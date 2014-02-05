@@ -9,33 +9,8 @@ npm install;
 node server.js  
 ```
 then click on the link below  
-[http://localhost:3000/?w=800&h=600&u=http://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg](http://localhost:3000/?w=800&h=600&u=http://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg)
+[http://localhost:3000/?width=800&height=600&image=http://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg](http://localhost:3000/?width=800&height=600&image=http://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg)
 
 #Reference projects
 http://www.jeff.wilcox.name/2011/10/node-express-imagemagick-square-resizing/  
 https://github.com/tildeio/rsvp.js/pull/4 (can't remember where i originally got the promisify stuff from)
-
-#Dependencies
-###xquartz
-http://xquartz.macosforge.org/landing/
-
-###xcode
-needs version 4.5.1
-
-###imagemagick
-getting this working is a pain if you've just switched from lion to mountain lion...good luck.
-install from here: http://cactuslab.com/imagemagick/
-
-or...
-
-```
-brew install imagemagick
-```
-or if you have an old version of imagemagick
-```
-brew uninstall imagemagick
-brew install --fresh imagemagick
-```
-
-#Notes
-Current passes jshint, but clashes with jslint's very opinionated style rules.
