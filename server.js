@@ -14,4 +14,4 @@ app.get('/', function(req, res) {
     })).resize(req.param('width'), req.param('height')).stream().pipe(res);
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT);
